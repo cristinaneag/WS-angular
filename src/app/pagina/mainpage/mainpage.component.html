@@ -1,0 +1,52 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-4" style="border-right: 1px solid #ccc;">
+            <h2>Categorii</h2>
+            <p id="fail"></p>
+            <button class="btn btn-success" (click)="renderCategories()">Afisare categorii</button>
+            <div *ngIf="showCategories" class="mt-3">
+                <ul class="list-group" id="categoriesList"  *ngFor="let category of categories">
+                    <li 
+                        class="list-group-item" 
+                        style="cursor: pointer;"
+                        (click)="chooseCategory(category)"
+                        [ngClass]="{'active':category==currentCateg}"
+                    >{{category[1]}}</li>
+                </ul>
+            </div>
+            
+        </div>
+        <div class="col-8">
+            <h2>{{(currentCateg)?(currentCateg[1]):"Alegeti o categorie"}}</h2>
+            <div class="row" *ngFor="let product of currentProducts">
+                <div class="col">
+                    <p>{{product[1].nume}}</p>
+                    <button class="btn btn-danger" (click)="deleteProduct(product[1].nume)">Stergere</button>
+                </div>
+                <div class="col">
+                    <img src="{{product[1].photo}}" alt="No image found" style="width: 60%;height: 60%;">
+                </div>
+                <div class="col">
+                    <p><strong>Denumire:</strong> {{product[1].description}}</p>
+                    <p><strong>Pret:</strong> {{product[1].price}} lei</p>
+                    <p><strong>In stoc:</strong> {{product[1].stoc}}</p>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-4" style="text-align: center;">
+            <h4>Adaugare produs din categoria {{currentCateg?currentCateg[1]:""}}</h4>
+        </div>
+        <div class="col-6">
+            <form #formInsert="ngForm">
+                <input type="text" name="denumire" placeholder="Denumire" class="form-control" ngModel>
+                <input type="number" name="pret"  placeholder="Pret" class="form-control" ngModel>
+            </form>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-success" type="submit"  (mouseover)="submitForm(formInsert)">Salvare</button>
+        </div>
+    </div>
+</div>
