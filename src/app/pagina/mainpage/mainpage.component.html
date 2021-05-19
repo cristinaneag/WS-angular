@@ -27,7 +27,7 @@
                     <img src="{{product[1].photo}}" alt="No image found" style="width: 60%;height: 60%;">
                 </div>
                 <div class="col">
-                    <p><strong>Denumire:</strong> {{product[1].description}}</p>
+                    <p><strong>Descriere:</strong> {{product[1].description}}</p>
                     <p><strong>Pret:</strong> {{product[1].price}} lei</p>
                     <p><strong>In stoc:</strong> {{product[1].stoc}}</p>
                 </div>
@@ -39,6 +39,8 @@
         <div class="col-4" style="text-align: center;">
             <h4>Adaugare produs din categoria {{currentCateg?currentCateg[1]:""}}</h4>
         </div>
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+        <div *ngIf="success" class="alert alert-success">{{success}}</div>
         <div class="col-6">
             <form #formInsert="ngForm">
                 <input type="text" name="denumire" placeholder="Denumire" class="form-control" ngModel>

@@ -13,6 +13,7 @@ export class MainpageComponent implements OnInit {
   categories=[];
   currentProducts=[];
   currentCateg=null;
+  error:string;success:string;
 
   ngOnInit(): void {
   }
@@ -40,7 +41,31 @@ export class MainpageComponent implements OnInit {
   }
 
   submitForm(form:NgForm){
-    console.log(form.value.denumire,form.value.pret);
+    if(this.currentCateg==null){
+      alert("Va rugam selectati o categorie!");
+    }
+    else{
+      let data=[]
+      data["denumire"]=form.value.denumire;
+      data["pret"]=form.value.pret;
+      data["categorie"]=this.currentCateg[0];
+    if(form.value.denumire!="" && form.value.pret!="")
+    {this.service.insertProduct(data).subscribe((res)=>{
+      if(res==1){
+        this.chooseCategory(this.currentCateg);
+        this.error=null;
+        this.success="Produs inserat cu succes";
+      }
+    },
+    (err)=>{
+      this.success=null;
+      this.error = err.error.text;
+    });}
+    else{
+      this.error="Completati campurile.";
+    }
+    }
   }
+
 
 }
